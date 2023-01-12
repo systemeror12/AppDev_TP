@@ -1,0 +1,33 @@
+#testimonials {
+    padding: 120px 0;
+    background: #6aaf08;
+}
+
+#testimonials .section-title {
+    margin-bottom: 70px;
+}
+
+#testimonials h2 {
+    color: #fff;
+    margin: 0 0 20px 0;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+#testimonials .section-title hr {
+    height: 3px;
+    width: 70px;
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.6);
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border: 0;
+}
+
+#testimonial p {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 32px;
+}
