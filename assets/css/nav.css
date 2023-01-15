@@ -2,3 +2,7 @@
     padding: 20px;
     transition: all 0.8s;
 }
+
+#menu a {
+    color: #fff;
+}

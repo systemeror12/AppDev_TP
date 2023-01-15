@@ -1,0 +1,18 @@
+#register {
+    padding-top: 20px;
+    padding-bottom: 120px;
+    background-size: cover;
+}
+
+#register p {
+    color: rgb(255, 255, 255);
+}
+
+#register h1 {
+    color: rgb(255, 255, 255);
+}
+
+#register .form p {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
