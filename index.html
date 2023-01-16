@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div id="navigation" style="background: #6aaf08;">
+    <div id="navigation" style="background: #333;" class="fixed-top">
         <div class="container">
             <nav id="menu" class="navbar navbar-expand-sm navbar-light">
                 <a class="navbar-brand" href="#">RMM</a>
@@ -33,22 +33,23 @@
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <div data-bs-spy="scroll" data-bs-target="#navigation" data-bs-offset="0"
+                    class="collapse navbar-collapse scrollspy-example" id="navbar-collapse" tabindex="0">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="#header">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="#about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Services</a>
+                            <a class="nav-link" href="#services">Services</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Gallery</a>
+                            <a class="nav-link" href="#portfolio">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="#contact">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -201,23 +202,19 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit duis sed dapibus leonec.</p>
             </div>
             <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="37%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-                        <div class="card-body">
-                            <p class="card-text">
-                                This is a wider card with supporting text below as a natural lead-in to additional
-                                content. This content is a little bit longer.
-                            </p>
+                <a href="./products.html">
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="./assets/img/products/Battle Grass dilaw.jpg" alt="">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    This is a wider card with supporting text below as a natural lead-in to additional
+                                    content. This content is a little bit longer.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 <div class="col">
                     <div class="card shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
@@ -358,8 +355,8 @@
         </div>
     </div>
 
-    <div id="testimonials" class="py-5 text-center">
-        <div class="overlay">
+    <div id="testimonials">
+        <div class="overlay py-5 text-center">
             <div class="container">
                 <div class="section-title text-center">
                     <h2>Testimonials</h2>
