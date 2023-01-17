@@ -1,12 +1,14 @@
 #products {
-    padding: 120px 0;
+    padding: 220px 0;
 
-}
-
-#products .section-title {
-    padding: 40px 0;
 }
 
 #products h2 {
     padding: 20px 0;
+}
+
+#products .cart {
+    color: #fff;
+    background-color: #6aaf08;
+    ;
 }
