@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="./assets/fonts/font-awesome/css/font-awesome.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href="./assets/css/other/owl.carousel.css" rel="stylesheet" media="screen">
+    <link href="./assets/css/other/owl.theme.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="./assets/css/other/nivo-lightbox/nivo-lightbox.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/other/nivo-lightbox/default.css">
+    <link rel="stylesheet" href="./assets/normalize/normalize.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+
+<body>
+    <div id="navigation" style="background: #333;" class="fixed-top">
+        <div class="container">
+            <nav id="menu" class="navbar navbar-expand-sm navbar-light">
+                <a class="navbar-brand" href="#">RMM</a>
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
+                    data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cart</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div id="products" class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="./assets/img/products/White Angel/IMG20230116112732.jpg" class="d-block w-100"
+                                    alt="battle_grass_dilaw">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="./assets/img/products/White Angel/IMG20230116112738.jpg" class="d-block w-100"
+                                    alt="battle_grass_dilaw">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="./assets/img/products/White Angel/IMG20230116112744.jpg" class="d-block w-100"
+                                    alt="battle_grass_dilaw">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
+                            <div class="row gx-3 gy-2 align-items-center">
+                                <h2>White Angel</h2>
+                                <div class="d-flex flex-row col-md-12 mb-4">
+                                    <h3>P000</h3>
+                                </div>
+                                <div class="d-flex flex-row col-md-6 mb-4">
+                                    <h3>Qantity</h3>
+                                </div>
+                                <div class="d-flex flex-row col-md-6 mb-4">
+                                    <div class="d-flex mb-4" style="max-width: 300px">
+                                        <button class="btn px-3 me-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+
+                                        <div class="form-outline">
+                                            <input id="form1" min="0" name="quantity" value="1" type="number"
+                                                class="form-control" />
+                                        </div>
+
+                                        <button class="btn px-3 ms-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="col-md-12 mb-4 btn btn-block mb-4 cart">Add to
+                                    Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container text-center">
+            <div>
+                <div class="social">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <p>© 2016 Landscaper. Designed by <a href="#">TemplateWire</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./assets/js/jquery.1.11.1.js"></script>
+    <script type="text/javascript" src="./assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="./assets/js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="./assets/js/nivo-lightbox.js"></script>
+    <script type="text/javascript" src="./assets/js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="./assets/js/owl.carousel.js"></script>
+    <script type="text/javascript" src="./assets/js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="./assets/js/contact_me.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+</body>
+
+</html>
