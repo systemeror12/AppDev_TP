@@ -1,119 +1,138 @@
-if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', ready)
-} else {
-    ready()
-}
+let shop = document.getElementById('products');
 
-function ready() {
-    var removeCartItemButtons = document.getElementsByClassName('delete-product')
-    console.log(removeCartItemButtons)
+console.log(shop)
 
-    for (var i = 0; i < removeCartItemButtons.length; i++) {
-        var button = removeCartItemButtons[i]
-        button.addEventListener('click', removeCartItem)
+let basket = JSON.parse(localStorage.getItem("data")) || [];
+
+let generateItem = () => {
+    return (shop.innerHTML = shopItemsData
+        .map((x) => {
+            let { id, name, desc, img, price, carouselimage1, carouselimage2, carouselimage3 } = x;
+            let search = basket.find((y) => y.id === id) || [];
+            return `
+            <div id=shop-id-${id} class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src=".${carouselimage1}"
+                                    class="d-block w-100 shop-item-image" alt="battle_grass_dilaw">
+                            </div>
+                            <div class="carousel-item">
+                                <img src=".${carouselimage2}"
+                                    class="d-block w-100" alt="battle_grass_dilaw">
+                            </div>
+                            <div class="carousel-item">
+                                <img src=".${carouselimage3}"
+                                    class="d-block w-100" alt="battle_grass_dilaw">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
+                            <div class="row gx-3 gy-2 align-items-center">
+                                <h2 class="shop-item-title">${name}</h2>
+                                <div class="d-flex flex-row col-md-12 mb-4">
+                                    <h3 class="shop-item-price">Price: P${price}</h3>
+                                </div>
+                                <div class="d-flex flex-row col-md-6 mb-4">
+                                    <h3>Qantity</h3>
+                                </div>
+                                <div class="d-flex flex-row col-md-6 mb-4">
+                                    <div class="d-flex mb-4" style="max-width: 300px">
+                                        <button class="btn px-3 me-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i  onclick="decreaseQuantity(${id})" class="fa fa-minus"></i>
+                                        </button>
+
+                                        <div class="form-outline">
+                                            <input id="${id}" min="0" name="quantity" value="${search.item === undefined ? 0 : search.item}" type="number"
+                                                class="form-control shop-item-quantity" />
+                                        </div>
+
+                                        <button class="btn px-3 ms-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i onclick="increaseQuantity(${id})" class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class = "d-flex flex-row col-md-12 mb-4">
+                                    <h3 class = "shop-item-description">Description: ${desc}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        }).join());
+};
+
+generateItem();
+
+let increaseQuantity = (id) => {
+    let selectedItem = id;
+    let search = basket.find((x) => x.id === selectedItem.id);
+    if (search === undefined) {
+        basket.push({
+            id: selectedItem.id,
+            item: 1,
+        });
+    } else {
+        search.item += 1;
     }
 
-    var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+    updateOrder(selectedItem.id);
+    localStorage.setItem("data", JSON.stringify(basket));
 
-    for (var i = 0; i < quantityInputs.length; i++) {
-        var input = quantityInputs[i]
-        input.addEventListener('change', quantityChanged)
+};
+
+let decreaseQuantity = (id) => {
+    let selectedItem = id;
+    let search = basket.find((x) => x.id === selectedItem.id);
+    if (search === undefined) return;
+    else if (search === 0) return;
+    else {
+        search.item -= 1;
     }
 
-    var addToCartButtons = document.getElementsByClassName('shop-item-cart')
+    updateOrder(selectedItem.id);
+    basket = basket.filter((x) => x.item != 0);
+    localStorage.setItem("data", JSON.stringify(basket));
+};
 
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
-        button.addEventListener('click,', addToCartClicked)
-    }
-}
+let updateOrder = (id) => {
+    let search = basket.find((x) => x.id === id);
+    document.getElementById(id).innerHTML = search.item;
+    calculation();
+};
 
-function removeCartItem(event) {
-    var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.parentElement.remove()
-    updateCartTotal()
-}
+let calculation = () => {
+    let cartIcon = document.getElementById("cart-amount");
+    cartIcon.innerHTML = basket.map((x) => x.item).reduce((x, y) => x + y, 0);
+};
 
-function quantityChanged(event) {
-    var input = event.target
-    if (isNaN(input.value) || input.value <= 0) {
-        input.value = 1
-    }
-    updateCartTotal()
-}
+calculation();
 
-function addToCartClicked(event) {
-    var button = event.target
-    var shopItem = button.parentElement.parentElement
-    var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
-    var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
-    var image = shopItem.getElementsByClassName('shop-item-image')[0].innerText
-    console.log(title, price, image)
-    addItemToCart(title, price, image)
-    updateCartTotal()
-
-}
-
-function addItemToCart(title, price, image) {
-    var cartRows = document.createElement('div')
-    cartRows.classList.add('cart-row')
-
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
-    for (var i = 0; i < cartItemNames.length; i++) {
-        if (cartItemNames[i].innerText == title) {
-            alert('This item is already been added to the cart')
-            return
-        }
-    }
-    var cartRowContents = `
-    <div class="col-md-2 col-lg-2 col-xl-2">
-        <img src="./assets/img/products/Battle Grass dilaw.jpg"
-            class="img-fluid rounded-3" alt="Cotton T-shirt">
-    </div>
-    <div class="col-md-3 col-lg-3 col-xl-3">
-        <h6 class="text-black mb-0">Battle Grass Dilaw</h6>
-    </div>
-    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-        <button class="btn btn-link px-2"
-            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-            <i class="fa fa-minus"></i>
-        </button>
-
-        <input id="form1" min="0" name="quantity" value="1" type="number"
-            class="form-control form-control-sm cart-quantity-input" />
-
-        <button class="btn btn-link px-2"
-            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-            <i class="fa fa-plus"></i>
-        </button>
-    </div>
-    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-        <h6 class="mb-0 cart-price">P 20.00</h6>
-    </div>
-    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-        <a href="#!" class="text-muted delete-product"><i
-                class="fa fa-times"></i></a>
-    </div>
-    `
-    cartRow.innerHTML = cartRowContents
-    cartItems.append(cartRows)
-    cartRows.getElementsByClassName('delete-product')[0].addEventListener('click', removeCartItem)
-    cartRows.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
-}
-function updateCartTotal() {
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-    var total = 0
-
-    for (var i = 0; i < cartRows.length; i++) {
-        var cartRow = cartRows[i]
-        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-        var price = parseFloat(priceElement.innerText.replace('P', ''))
-        var quantity = quantityElement.value
-        total = total + (price * quantity)
-    }
-    total = Math.round(total * 100) / 100
-    document.getElementsByClassName('cart-total-price')[0].innerText = 'P' + total
-}
