@@ -12,3 +12,10 @@
     background-color: #6aaf08;
     ;
 }
+
+#navigation .cart-amount {
+    position: absolute;
+    top: 20px;
+    left: 595px;
+    color: #fff;
+}

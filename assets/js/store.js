@@ -7,7 +7,7 @@ let basket = JSON.parse(localStorage.getItem("data")) || [];
 let generateItem = () => {
     return (shop.innerHTML = shopItemsData
         .map((x) => {
-            let { id, name, desc, img, price, carouselimage1, carouselimage2, carouselimage3 } = x;
+            let { id, name, price, size, desc, carouselimage1, carouselimage2, carouselimage3 } = x;
             let search = basket.find((y) => y.id === id) || [];
             return `
             <div id=shop-id-${id} class="container">
@@ -52,7 +52,11 @@ let generateItem = () => {
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
                             <div class="row gx-3 gy-2 align-items-center">
-                                <h2 class="shop-item-title">${name}</h2>
+                                <h2 class="shop-item-title">${name} - ${size}</h2>
+                                <h3 class = "shop-item-title-size"></h3>
+                                <div class="d-flex flex-row col-md-12 mb-4">
+                                    <h3>Size: ${size}</h3>
+                                </div>
                                 <div class="d-flex flex-row col-md-12 mb-4">
                                     <h3 class="shop-item-price">Price: P${price}</h3>
                                 </div>

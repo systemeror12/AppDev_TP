@@ -15,7 +15,7 @@ let generateCart = () => {
         return (cart.innerHTML = basket.map((x) => {
             let { id, item } = x;
             let search = shopItemsData.find((x) => x.id === id) || [];
-            let { img, price, name } = search;
+            let { img, size, price, name } = search;
             return `
             <div
             class="row mb-4 d-flex justify-content-between align-items-center cart-row">
@@ -24,7 +24,7 @@ let generateCart = () => {
                     class="img-fluid rounded-3" alt="Cotton T-shirt">
             </div>
             <div class="col-md-3 col-lg-3 col-xl-3">
-                <h6 class="text-black mb-0 cart-item-title">${name}</h6>
+                <h6 class="text-black mb-0 cart-item-title">${name} - ${size}</h6>
             </div>
             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                 <button class="btn btn-link px-2"
