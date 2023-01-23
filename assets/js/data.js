@@ -23,19 +23,8 @@ let shopItemsData = [{
 {
     id: "georginiapula1",
     name: "Georginia Pula",
-    size: "8x8x14 - 2 feet",
+    size: "8x8x14",
     price: 100,
-    desc: "One of the subspecies of the Georginia plant family and being one of the most non-delicate of the plant family hence resulting in lower maintenance and care difficulty",
-    carouselimage1: "/assets/img/products/Georginia Pula/IMG20230116112504.jpg",
-    carouselimage2: "/assets/img/products/Georginia Pula/IMG20230116112515.jpg",
-    carouselimage3: "/assets/img/products/Georginia Pula/IMG20230116112523.jpg",
-    img: "/assets/img/products/Georginia Pula.jpg",
-},
-{
-    id: "georginiapula2",
-    name: "Georginia Pula",
-    size: "8x8x14 - 3 feet",
-    price: 150,
     desc: "One of the subspecies of the Georginia plant family and being one of the most non-delicate of the plant family hence resulting in lower maintenance and care difficulty",
     carouselimage1: "/assets/img/products/Georginia Pula/IMG20230116112504.jpg",
     carouselimage2: "/assets/img/products/Georginia Pula/IMG20230116112515.jpg",
@@ -45,7 +34,7 @@ let shopItemsData = [{
 {
     id: "georginiaputi1",
     name: "Georginia Puti",
-    size: "8x8x14 - 1&2 feet",
+    size: "8x8x14",
     price: 100,
     desc: "One of the subspecies of the Georginia plant family and being one of the most delicate of this plant family. Make sure to have patience with this one as its one of the slowest growing plants",
     carouselimage1: "/assets/img/products/Georginia Puti/IMG20230116112541.jpg",
@@ -67,7 +56,7 @@ let shopItemsData = [{
 {
     id: "macky1",
     name: "Macky",
-    size: "8x8x14 - 2&3 feet",
+    size: "8x8x14",
     price: 100,
     desc: "One of the best wall decoration plants in the market. Tall and big plant that will surely change how your property looks.",
     carouselimage1: "/assets/img/products/Macky/IMG20230116112846.jpg",
