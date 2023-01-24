@@ -1,6 +1,9 @@
 let cart = document.getElementById("cart");
 let cartempty = document.getElementById("cartempty");
 let label = document.getElementById("label");
+let orderdetails = document.getElementById("details");
+let detailsamount = document.getElementById("details-amount");
+let purchases = JSON.parse(localStorage.getItem("history")) || [];
 let basket = JSON.parse(localStorage.getItem("data")) || [];
 
 let calculation = () => {
@@ -111,6 +114,36 @@ let removeCart = (id) => {
     generateCart();
     TotalAmount();
     localStorage.setItem("data", JSON.stringify(basket));
+};
+
+let generateOrderDetails = () => {
+    if (basket.length !== 0) {
+        return (orderdetails.innerHTML = basket.map((x) => {
+            let { id, item } = x;
+            let search = shopItemsData.find((x) => x.id === id) || [];
+            let { img, size, price, name } = search;
+            return `
+            <div class="d-flex justify-content-between">
+                <p class="fw-bold mb-0">${name}(Qty:${item})</p>
+                <p class="text-muted mb-0">${item * price}</p>
+            </div>
+            `;
+        })
+            .join(""));
+    } else {
+        cart.innerHTML = "";
+        cartempty.innerHTML = `
+        <h2>Cart is Empty</h2>
+        `;
+    }
+};
+
+generateOrderDetails();
+
+let saveOrderDetail = () => {
+
+    localStorage.setItem("history", JSON.stringify(basket));
+    clearCart();
 }
 
 let TotalAmount = () => {
@@ -127,7 +160,7 @@ let TotalAmount = () => {
             <hr class="my-4">
 
             <div class="d-flex justify-content-between mb-4">
-                <h5 class="text-uppercase">items </h5>
+                <h5 class="text-uppercase">Price: </h5>
                 <h5>P ${amount}</h5>
             </div>
 
@@ -139,17 +172,6 @@ let TotalAmount = () => {
                 </select>
             </div>
 
-            <h5 class="text-uppercase mb-3">Give code</h5>
-
-            <div class="mb-5">
-                <div class="form-outline">
-                    <input type="text" id="form3Examplea2"
-                        class="form-control form-control-lg" />
-                    <label class="form-label" for="form3Examplea2">Enter your
-                        code</label>
-                </div>
-            </div>
-
             <hr class="my-4">
 
             <div class="d-flex justify-content-between mb-5">
@@ -157,8 +179,8 @@ let TotalAmount = () => {
                 <h5 class="cart-total-price">P ${amount}</h5>
             </div>
 
-            <button type="button" class="btn btn-dark btn-block btn-lg"
-                data-mdb-ripple-color="dark">Purchase</button>
+            <button onclick = "saveOrderDetail()" type="button" class="btn btn-dark btn-block btn-lg"
+                data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#modal-order-detail">Purchase</button>
 
         </div>
             `);
@@ -168,6 +190,27 @@ let TotalAmount = () => {
 };
 
 TotalAmount();
+
+let OrderDetailsAmount = () => {
+    if (basket.length !== 0) {
+        let amount = basket.map((x) => {
+            let { id, item } = x;
+            let filterData = shopItemsData.find((x) => x.id === id);
+            return filterData.price * item;
+        })
+            .reduce((x, y) => x + y, 0);
+        return (detailsamount.innerHTML = `
+            <div class="d-flex justify-content-between">
+                <p class="fw-bold">Total</p>
+                <p class="fw-bold" style="color: #6aaf08;">P${amount}</p>
+            </div>
+        `);
+    } else {
+        label.innerHTML = "";
+    }
+};
+
+OrderDetailsAmount();
 
 let clearCart = () => {
     basket = []

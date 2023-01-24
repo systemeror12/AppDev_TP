@@ -1,7 +1,5 @@
 let shop = document.getElementById('products');
 
-console.log(shop)
-
 let basket = JSON.parse(localStorage.getItem("data")) || [];
 
 let generateItem = () => {
