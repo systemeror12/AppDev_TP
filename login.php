@@ -1,3 +1,33 @@
+<?php
+    @include 'phpfiles/config.php';
+    
+
+    if(isset($_POST['submit'])){
+    session_start();
+    $email = mysqli_real_escape_string($conn, $_POST['formUsername']);
+    $pass = md5($_POST['formPassword']);
+
+        
+
+    $select = " SELECT * FROM tb_users WHERE Email = '$email' && Pass = '$pass' ";
+
+    $result = mysqli_query($conn, $select);
+
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_array($result);           
+            $_SESSION['UserId'] = $row['User_id'];
+            header('location:index.php');
+        
+        
+    }else{
+        $error[] = 'incorrect email or password!';
+    }
+
+    };
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -33,15 +63,26 @@
                                 The best offer<br />
                                 <span class="text-success">for your hobby</span>
                             </h1>
-                            <p>Bring beauty to your property and help care for our planet. Register now to enjoy the
-                                full service of RMM Garden.
-                            </p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit.
+                                Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                                quibusdam tempora at cupiditate quis eum maiores libero
+                                veritatis? Dicta facilis sint aliquid ipsum atque?</p>
                         </div>
 
                         <div class="col-lg-6 mb-5 mb-lg-0">
                             <div class="card">
                                 <div class="card-body py-5 px-md-5">
-                                    <form action="" class="login">
+                                    <form action="" method="post" class="login">
+                                    <?php
+                                            if(isset($error))
+                                            {
+                                                foreach($error as $error)
+                                                {
+                                                echo '<span class="error-msg">'.$error.'</span>';
+                                                };
+                                            };
+                                    ?>
                                         <div class="row">
                                             <div class="col-md-12 mb-1 d-flex justify-content-center">
                                                 <h2>Welcome to RMM</h2>
@@ -50,12 +91,12 @@
                                                 <p>All things grow with love</p>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="formUsername" class="form-control" />
+                                                <input type="email" name="formUsername" id="formUsername" class="form-control" />
                                                 <label class="form=label" for="formUsername">Username</label>
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <input type="password" id="formPassword" class="form-control" />
+                                                <input type="password" name="formPassword" id="formPassword" class="form-control" />
                                                 <label class="form=label" for="formPassword">Password</label>
                                             </div>
 
@@ -69,11 +110,11 @@
                                         </div>
 
                                         <div class="row">
-                                            <button type="submit"
-                                                class="col-md-12 mb-4 btn btn-success btn-block mb-4">Login</button>
+                                            <input type="submit" name="submit"
+                                                class="col-md-12 mb-4 btn btn-success btn-block mb-4" value ="Login">
                                             <div class="col-md-12 mb-4 form-check d-flex justify-content-center mb-4">
                                                 <label class="form-check-label" for="formNewsletter">
-                                                    <a href="register.html" class="text-success"> Sign up for RMM</a>
+                                                    <a href="register.php" class="text-success"> Sign up for RMM</a>
                                                 </label>
                                             </div>
                                         </div>
@@ -110,16 +151,11 @@
                     </ul>
 
                 </div>
+                <p>© 2016 Landscaper. Designed by <a href="#">TemplateWire</a></p>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="./assets/js/jquery.1.11.1.js"></script>
-    <script type="text/javascript" src="./assets/js/bootstrap.js"></script>
-    <script type="text/javascript" src="./assets/js/nivo-lightbox.js"></script>
-    <script type="text/javascript" src="./assets/js/jquery.isotope.js"></script>
-    <script type="text/javascript" src="./assets/js/owl.carousel.js"></script>
-    <script type="text/javascript" src="./assets/js/jqBootstrapValidation.js"></script>
-    <script type="text/javascript" src="./assets/js/main.js"></script>
+    
 </body>
-
+  
 </html>

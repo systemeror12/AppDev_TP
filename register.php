@@ -1,3 +1,42 @@
+<?php
+    @include 'phpfiles/Config.php';
+
+    if(isset($_POST['submit'])){     
+        $fname = mysqli_real_escape_string($conn, $_POST['formRegFirstname']);
+        $lname = mysqli_real_escape_string($conn, $_POST['formRegLastname']);
+        $email = mysqli_real_escape_string($conn, $_POST['formRegEmail']);
+        $pass = md5($_POST['formRegPassword']);
+        $contact = mysqli_real_escape_string($conn, $_POST['formRegContactNumber']);
+        $Gender = mysqli_real_escape_string($conn, $_POST['flexRadioDefault']);
+        $Month = mysqli_real_escape_string($conn, $_POST['Month']);
+        $Day = mysqli_real_escape_string($conn, $_POST['Day']);
+        $Year = mysqli_real_escape_string($conn, $_POST['Year']);
+
+        $BDate = $Month . " " .$Day. ", ". $Year;
+
+        $select = " SELECT * FROM tb_users WHERE Email = '$email' && Pass = '$pass' ";
+     
+        $result = mysqli_query($conn, $select);
+     
+        if(mysqli_num_rows($result) > 0){
+     
+           $error[] = 'user already exist!';
+     
+        }else{
+    
+              $insert = "INSERT INTO tb_users(FName, LName, Email, Pass, Contact, Gender, BDate )
+               VALUES('$fname', '$lname', '$email', '$pass', '$contact', '$Gender', '$BDate')";
+            
+            mysqli_query($conn, $insert);
+            header('location:Login.php');
+			 
+           
+        }
+     
+     };
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -33,21 +72,35 @@
                                 The best offer<br />
                                 <span class="text-success">for your hobby</span>
                             </h1>
-                            <p>Bring beauty to your property and help care for our planet. Register now to enjoy the
-                                full service of RMM Garden.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing
+                                elit.
+                                Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                                quibusdam tempora at cupiditate quis eum maiores libero
+                                veritatis? Dicta facilis sint aliquid ipsum atque?</p>
                         </div>
 
                         <div class="col-lg-6 mb-5 mb-lg-0">
                             <div class="card">
                                 <div class="card-body py-5 px-md-5">
-                                    <form action="" class="form">
+                                    <form action="" method="post" class="form" >
+                                    <?php
+                                        if(isset($error))
+                                        {
+                                            foreach($error as $error)
+                                            {
+                                                echo '<span class="error-msg">'.$error.'</span>';
+                                            };
+                                        };
+                                
+                                    ?>
+
                                         <div class="row">
                                             <div class="d-flex justify-content-center col-md-12 mb-4">
                                                 <h2>Create a new account</h2>
                                             </div>
                                             <div class="col-md-6 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text" id="formRegFirstname" class="form-control" />
+                                                    <input type="text" id="formRegFirstname" name="formRegFirstname" class="form-control" required />
                                                     <label class="form-label" for="formRegFirstname">
                                                         First name
                                                     </label>
@@ -55,26 +108,26 @@
                                             </div>
                                             <div class="col-md-6 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text" id="formRegLastname" class="form-control" />
+                                                    <input type="text" id="formRegLastname" name="formRegLastname" class="form-control" required />
                                                     <label class="form-label" for="formRegLastname">
                                                         Last name
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="formRegEmail" class="form-control" />
+                                                <input type="email" id="formRegEmail" name="formRegEmail"class="form-control" required />
                                                 <label class="form=label" for="formRegEmail">
                                                     Email adress
                                                 </label>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="password" id="formRegPassword" class="form-control" />
+                                                <input type="password" id="formRegPassword" name="formRegPassword" class="form-control" required />
                                                 <label class="form=label" for="formRegPassword">
                                                     Password
                                                 </label>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="text" id="formRegContactNumber" class="form-control" />
+                                                <input type="text" id="formRegContactNumber" name="formRegContactNumber" class="form-control" required/>
                                                 <label class="form-label" for="formRegContactNumber">
                                                     Contact number
                                                 </label>
@@ -83,7 +136,7 @@
                                                 <div class="col-md-6 mb-4">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="formRegMale">
+                                                            name="flexRadioDefault" id="formRegMale" value="Male">
                                                         <label class="form-check-label" for="formRegMale">
                                                             Male
                                                         </label>
@@ -92,13 +145,14 @@
                                                 <div class="col-md-6 mb-4">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="formRegFemale" checked>
+                                                            name="flexRadioDefault" id="formRegFemale" value="Female">
                                                         <label class="form-check-label" for="formRegFemale">
                                                             Female
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-md-3 mb-4">
                                                     <div class="form-outline">
@@ -109,7 +163,7 @@
                                                 </div>
                                                 <div class="col-md-3 mb-4">
                                                     <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example">
+                                                        aria-label=".form-select-sm example" name="Year">
                                                         <option selected>Year</option>
                                                         <option value="1970">1970</option>
                                                         <option value="1971">1971</option>
@@ -169,7 +223,7 @@
                                                 </div>
                                                 <div class="col-md-3 mb-4">
                                                     <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example">
+                                                        aria-label=".form-select-sm example" name="Month">
                                                         <option selected>Month</option>
                                                         <option value="Januray">Januray</option>
                                                         <option value="Feburary">Feburary</option>
@@ -187,7 +241,7 @@
                                                 </div>
                                                 <div class="col-md-3 mb-4">
                                                     <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example">
+                                                        aria-label=".form-select-sm example" name="Day">
                                                         <option selected>Date</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -231,18 +285,25 @@
                                                     you agree to our Terms, Data Policy and Cookies Policy. You may
                                                     recieve
                                                     SMS Notifications from us and can opt out any time.
+                                          
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check d-flex justify-content-center mb-4">
+                                                <input class="form-check-input me-2" type="checkbox" value=""
+                                                    id="formNewsletter" checked />
+                                                <label class="form-check-label" for="formNewsletter">Subscribe to our
+                                                    newsletter
                                                 </label>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <button type="submit"
-                                                class="col-md-12 mb-4 btn btn-success btn-block mb-4">Sign
-                                                up</button>
+                                            <input type="submit" name="submit"
+                                                class="col-md-12 mb-4 btn btn-success btn-block mb-4" value ="Sign up" >
                                             <div class="col-md-12 form-check d-flex justify-content-center mb-4">
                                                 <label class="form-check-label" for="formNewsletter">
-                                                    Already have an account? <a href="login.html"
-                                                        class="text-success">Log In</a>
+                                                    Already have an account? <a href="login.php" class="text-success">Log In</a>
                                                 </label>
                                             </div>
                                         </div>
@@ -279,16 +340,11 @@
                     </ul>
 
                 </div>
+                <p>© 2016 Landscaper. Designed by <a href="#">TemplateWire</a></p>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="./assets/js/jquery.1.11.1.js"></script>
-    <script type="text/javascript" src="./assets/js/bootstrap.js"></script>
-    <script type="text/javascript" src="./assets/js/nivo-lightbox.js"></script>
-    <script type="text/javascript" src="./assets/js/jquery.isotope.js"></script>
-    <script type="text/javascript" src="./assets/js/owl.carousel.js"></script>
-    <script type="text/javascript" src="./assets/js/jqBootstrapValidation.js"></script>
-    <script type="text/javascript" src="./assets/js/main.js"></script>
+
 </body>
 
 </html>

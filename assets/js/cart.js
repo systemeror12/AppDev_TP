@@ -14,11 +14,16 @@ let calculation = () => {
 calculation();
 
 let generateCart = () => {
+  
     if (basket.length !== 0) {
+        ToDb();      
+      
         return (cart.innerHTML = basket.map((x) => {
+           
             let { id, item } = x;
             let search = shopItemsData.find((x) => x.id === id) || [];
             let { img, size, price, name } = search;
+            
             return `
             <div
             class="row mb-4 d-flex justify-content-between align-items-center cart-row">
@@ -40,27 +45,31 @@ let generateCart = () => {
 
                 <button class="btn btn-link px-2"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                    <i onclick="increaseQuantity(${id})" class="fa fa-plus"></i>
+                    <i onclick="increaseQuantity(${id})"class="fa fa-plus"></i>
                 </button>
             </div>
             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h6 class="mb-0 cart-price">${item * price}</h6>
             </div>
             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <a href="#!" class="text-muted delete-product"><i 
+            <?php><a href="DeleteCart.php?Deleteid=${id}" class="text-muted delete-product"><i 
                     onclick="removeCart(${id})"
                     class="fa fa-times"></i></a>
             </div>
         </div>
             `;
         })
-            .join(""));
+            .join(""));          
     } else {
+       
         cart.innerHTML = "";
         cartempty.innerHTML = `
         <h2>Cart is Empty</h2>
         `;
     }
+
+
+    
 };
 
 generateCart();
@@ -70,6 +79,7 @@ let increaseQuantity = (id) => {
     let search = basket.find((x) => x.id === selectedItem.id);
 
     if (search === undefined) {
+      
         basket.push({
             id: selectedItem.id,
             item: 1,
@@ -81,6 +91,8 @@ let increaseQuantity = (id) => {
     generateCart();
     updateOrder(selectedItem.id);
     localStorage.setItem("data", JSON.stringify(basket));
+
+   
 };
 
 let decreaseQuantity = (id) => {
@@ -108,12 +120,15 @@ let updateOrder = (id) => {
 };
 
 let removeCart = (id) => {
+      
     let selectedItem = id;
     basket = basket.filter((x) => x.id !== selectedItem.id);
     calculation();
     generateCart();
     TotalAmount();
     localStorage.setItem("data", JSON.stringify(basket));
+  
+  
 };
 
 let generateOrderDetails = () => {
@@ -218,3 +233,60 @@ let clearCart = () => {
     calculation();
     localStorage.setItem("data", JSON.stringify(basket));
 };
+
+function ToDb()
+{
+    var con = basket.length;
+    con = con -1;
+    for(let ret =0; ret<= con; ret++)
+    {
+        let jsonArray = basket;
+    
+    let firstObject = jsonArray[ret];
+    
+    
+    let id = firstObject.id;
+    let item = firstObject.item;
+   
+    $.ajax({
+        type: "POST",
+        url: "AddToCart.php",
+        data: {id:id,item: item},
+        success: function(response) {
+          console.log(response);
+          console.log(basket);
+        }
+      });
+
+    }
+    
+
+}
+
+
+function DelDb(){
+    
+    var con = basket.length;
+    con = con -1;
+    for(let ret =0; ret<= con; ret++)
+    {
+        let jsonArray = basket;
+    
+    let firstObject = jsonArray[ret];
+    
+    
+    let id = firstObject.id;
+    let item = firstObject.item;
+ 
+    
+    $.ajax({
+        type: "GET",
+        url: "DeleteCart.php",
+        data: {id:id,item: item},
+        success: function(response) {
+          console.log(response);
+        }
+      });
+
+    }
+}
