@@ -1,39 +1,35 @@
 <?php
-    @include 'phpfiles/Config.php';
+@include 'phpfiles/Config.php';
 
-    if(isset($_POST['submit'])){     
-        $fname = mysqli_real_escape_string($conn, $_POST['formRegFirstname']);
-        $lname = mysqli_real_escape_string($conn, $_POST['formRegLastname']);
-        $email = mysqli_real_escape_string($conn, $_POST['formRegEmail']);
-        $pass = md5($_POST['formRegPassword']);
-        $contact = mysqli_real_escape_string($conn, $_POST['formRegContactNumber']);
-        $Gender = mysqli_real_escape_string($conn, $_POST['flexRadioDefault']);
-        $Month = mysqli_real_escape_string($conn, $_POST['Month']);
-        $Day = mysqli_real_escape_string($conn, $_POST['Day']);
-        $Year = mysqli_real_escape_string($conn, $_POST['Year']);
+if (isset($_POST['submit'])) {
+    $fname = mysqli_real_escape_string($conn, $_POST['formRegFirstname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['formRegLastname']);
+    $email = mysqli_real_escape_string($conn, $_POST['formRegEmail']);
+    $pass = md5($_POST['formRegPassword']);
+    $contact = mysqli_real_escape_string($conn, $_POST['formRegContactNumber']);
+    $Gender = mysqli_real_escape_string($conn, $_POST['flexRadioDefault']);
+    $Month = mysqli_real_escape_string($conn, $_POST['Month']);
+    $Day = mysqli_real_escape_string($conn, $_POST['Day']);
+    $Year = mysqli_real_escape_string($conn, $_POST['Year']);
 
-        $BDate = $Month . " " .$Day. ", ". $Year;
+    $BDate = $Month . " " . $Day . ", " . $Year;
 
-        $select = " SELECT * FROM tb_users WHERE Email = '$email' && Pass = '$pass' ";
-     
-        $result = mysqli_query($conn, $select);
-     
-        if(mysqli_num_rows($result) > 0){
-     
-           $error[] = 'user already exist!';
-     
-        }else{
-    
-              $insert = "INSERT INTO tb_users(FName, LName, Email, Pass, Contact, Gender, BDate )
+    $select = " SELECT * FROM tb_users WHERE Email = '$email' && Pass = '$pass' ";
+
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+
+        $error[] = 'user already exist!';
+    } else {
+
+        $insert = "INSERT INTO tb_users(FName, LName, Email, Pass, Contact, Gender, BDate )
                VALUES('$fname', '$lname', '$email', '$pass', '$contact', '$Gender', '$BDate')";
-            
-            mysqli_query($conn, $insert);
-            header('location:Login.php');
-			 
-           
-        }
-     
-     };
+
+        mysqli_query($conn, $insert);
+        header('location:Login.php');
+    }
+};
 
 ?>
 
@@ -48,16 +44,13 @@
     <link rel="stylesheet" href="./assets/fonts/font-awesome/css/font-awesome.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="./assets/css/other/owl.carousel.css" rel="stylesheet" media="screen">
     <link href="./assets/css/other/owl.theme.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" type="text/css" href="./assets/css/other/nivo-lightbox/nivo-lightbox.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/other/nivo-lightbox/default.css">
     <link rel="stylesheet" href="./assets/normalize/normalize.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
@@ -82,17 +75,15 @@
                         <div class="col-lg-6 mb-5 mb-lg-0">
                             <div class="card">
                                 <div class="card-body py-5 px-md-5">
-                                    <form action="" method="post" class="form" >
-                                    <?php
-                                        if(isset($error))
-                                        {
-                                            foreach($error as $error)
-                                            {
-                                                echo '<span class="error-msg">'.$error.'</span>';
+                                    <form action="" method="post" class="form">
+                                        <?php
+                                        if (isset($error)) {
+                                            foreach ($error as $error) {
+                                                echo '<span class="error-msg">' . $error . '</span>';
                                             };
                                         };
-                                
-                                    ?>
+
+                                        ?>
 
                                         <div class="row">
                                             <div class="d-flex justify-content-center col-md-12 mb-4">
@@ -115,7 +106,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="formRegEmail" name="formRegEmail"class="form-control" required />
+                                                <input type="email" id="formRegEmail" name="formRegEmail" class="form-control" required />
                                                 <label class="form=label" for="formRegEmail">
                                                     Email adress
                                                 </label>
@@ -127,7 +118,7 @@
                                                 </label>
                                             </div>
                                             <div class="form-outline mb-4">
-                                                <input type="text" id="formRegContactNumber" name="formRegContactNumber" class="form-control" required/>
+                                                <input type="text" id="formRegContactNumber" name="formRegContactNumber" class="form-control" required />
                                                 <label class="form-label" for="formRegContactNumber">
                                                     Contact number
                                                 </label>
@@ -135,8 +126,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="formRegMale" value="Male">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="formRegMale" value="Male">
                                                         <label class="form-check-label" for="formRegMale">
                                                             Male
                                                         </label>
@@ -144,8 +134,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-4">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="formRegFemale" value="Female">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="formRegFemale" value="Female">
                                                         <label class="form-check-label" for="formRegFemale">
                                                             Female
                                                         </label>
@@ -162,8 +151,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 mb-4">
-                                                    <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example" name="Year">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="Year">
                                                         <option selected>Year</option>
                                                         <option value="1970">1970</option>
                                                         <option value="1971">1971</option>
@@ -222,8 +210,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 mb-4">
-                                                    <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example" name="Month">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="Month">
                                                         <option selected>Month</option>
                                                         <option value="Januray">Januray</option>
                                                         <option value="Feburary">Feburary</option>
@@ -240,8 +227,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 mb-4">
-                                                    <select class="form-select form-select-sm"
-                                                        aria-label=".form-select-sm example" name="Day">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="Day">
                                                         <option selected>Date</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -285,13 +271,12 @@
                                                     you agree to our Terms, Data Policy and Cookies Policy. You may
                                                     recieve
                                                     SMS Notifications from us and can opt out any time.
-                                          
+
                                                 </label>
                                             </div>
 
                                             <div class="form-check d-flex justify-content-center mb-4">
-                                                <input class="form-check-input me-2" type="checkbox" value=""
-                                                    id="formNewsletter" checked />
+                                                <input class="form-check-input me-2" type="checkbox" value="" id="formNewsletter" checked />
                                                 <label class="form-check-label" for="formNewsletter">Subscribe to our
                                                     newsletter
                                                 </label>
@@ -299,8 +284,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <input type="submit" name="submit"
-                                                class="col-md-12 mb-4 btn btn-success btn-block mb-4" value ="Sign up" >
+                                            <input type="submit" name="submit" class="col-md-12 mb-4 btn btn-success btn-block mb-4" value="Sign up">
                                             <div class="col-md-12 form-check d-flex justify-content-center mb-4">
                                                 <label class="form-check-label" for="formNewsletter">
                                                     Already have an account? <a href="login.php" class="text-success">Log In</a>

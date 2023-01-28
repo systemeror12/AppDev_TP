@@ -1,12 +1,16 @@
 <?php
 @include 'phpfiles/config.php';
 session_start();
-$id = $_GET["id"];
 
-$tempid = $_SESSION['UserId'];
+$id = $_POST["id"];
+$item = $_POST["item"];
+
 $_SESSION["id"] = $id;
+$_SESSION["item"] = $item;
 
-$sql = "DELETE FROM `test` WHERE id = '$id'";
+
+$sql = "UPDATE `test` SET item='$item' WHERE id='$id'";
+
 $result = mysqli_query($conn, $sql);
 
 if ($result) {

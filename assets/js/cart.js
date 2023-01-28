@@ -3,7 +3,6 @@ let cartempty = document.getElementById("cartempty");
 let label = document.getElementById("label");
 let orderdetails = document.getElementById("details");
 let detailsamount = document.getElementById("details-amount");
-let purchases = JSON.parse(localStorage.getItem("history")) || [];
 let basket = JSON.parse(localStorage.getItem("data")) || [];
 
 let calculation = () => {
@@ -14,16 +13,16 @@ let calculation = () => {
 calculation();
 
 let generateCart = () => {
-  
+
     if (basket.length !== 0) {
-        ToDb();      
-      
+        ToDb();
+
         return (cart.innerHTML = basket.map((x) => {
-           
+
             let { id, item } = x;
             let search = shopItemsData.find((x) => x.id === id) || [];
             let { img, size, price, name } = search;
-            
+
             return `
             <div
             class="row mb-4 d-flex justify-content-between align-items-center cart-row">
@@ -59,9 +58,9 @@ let generateCart = () => {
         </div>
             `;
         })
-            .join(""));          
+            .join(""));
     } else {
-       
+
         cart.innerHTML = "";
         cartempty.innerHTML = `
         <h2>Cart is Empty</h2>
@@ -69,7 +68,7 @@ let generateCart = () => {
     }
 
 
-    
+
 };
 
 generateCart();
@@ -79,7 +78,7 @@ let increaseQuantity = (id) => {
     let search = basket.find((x) => x.id === selectedItem.id);
 
     if (search === undefined) {
-      
+
         basket.push({
             id: selectedItem.id,
             item: 1,
@@ -92,7 +91,7 @@ let increaseQuantity = (id) => {
     updateOrder(selectedItem.id);
     localStorage.setItem("data", JSON.stringify(basket));
 
-   
+
 };
 
 let decreaseQuantity = (id) => {
@@ -120,15 +119,15 @@ let updateOrder = (id) => {
 };
 
 let removeCart = (id) => {
-      
+
     let selectedItem = id;
     basket = basket.filter((x) => x.id !== selectedItem.id);
     calculation();
     generateCart();
     TotalAmount();
     localStorage.setItem("data", JSON.stringify(basket));
-  
-  
+
+
 };
 
 let generateOrderDetails = () => {
@@ -234,59 +233,56 @@ let clearCart = () => {
     localStorage.setItem("data", JSON.stringify(basket));
 };
 
-function ToDb()
-{
+function ToDb() {
     var con = basket.length;
-    con = con -1;
-    for(let ret =0; ret<= con; ret++)
-    {
+    con = con - 1;
+    for (let ret = 0; ret <= con; ret++) {
         let jsonArray = basket;
-    
-    let firstObject = jsonArray[ret];
-    
-    
-    let id = firstObject.id;
-    let item = firstObject.item;
-   
-    $.ajax({
-        type: "POST",
-        url: "AddToCart.php",
-        data: {id:id,item: item},
-        success: function(response) {
-          console.log(response);
-          console.log(basket);
-        }
-      });
+
+        let firstObject = jsonArray[ret];
+
+
+        let id = firstObject.id;
+        let item = firstObject.item;
+
+        $.ajax({
+            type: "POST",
+            url: "AddToCart.php",
+            data: { id: id, item: item },
+            success: function (response) {
+                console.log(response);
+                console.log(basket);
+            }
+        });
 
     }
-    
+
 
 }
 
 
-function DelDb(){
-    
+function DelDb() {
+
     var con = basket.length;
-    con = con -1;
-    for(let ret =0; ret<= con; ret++)
-    {
+    con = con - 1;
+    for (let ret = 0; ret <= con; ret++) {
         let jsonArray = basket;
-    
-    let firstObject = jsonArray[ret];
-    
-    
-    let id = firstObject.id;
-    let item = firstObject.item;
- 
-    
-    $.ajax({
-        type: "GET",
-        url: "DeleteCart.php",
-        data: {id:id,item: item},
-        success: function(response) {
-          console.log(response);
-        }
-      });
+
+        let firstObject = jsonArray[ret];
+
+
+        let id = firstObject.id;
+        let item = firstObject.item;
+
+
+        $.ajax({
+            type: "GET",
+            url: "DeleteCart.php",
+            data: { id: id, item: item },
+            success: function (response) {
+                console.log(response);
+            }
+        });
 
     }
 }

@@ -1,12 +1,14 @@
 let shop = document.getElementById('products');
 
-let basket = JSON.parse(localStorage.getItem("data")) || [];
+let basket = [];
 
 let generateItem = () => {
+
     return (shop.innerHTML = shopItemsData
         .map((x) => {
             let { id, name, price, size, desc, carouselimage1, carouselimage2, carouselimage3 } = x;
             let search = basket.find((y) => y.id === id) || [];
+
             return `
             <div id=shop-id-${id} class="container">
             <div class="row">
@@ -105,10 +107,8 @@ let increaseQuantity = (id) => {
     } else {
         search.item += 1;
     }
-
     updateOrder(selectedItem.id);
-    localStorage.setItem("data", JSON.stringify(basket));
-
+    addItem();
 };
 
 let decreaseQuantity = (id) => {
@@ -122,12 +122,13 @@ let decreaseQuantity = (id) => {
 
     updateOrder(selectedItem.id);
     basket = basket.filter((x) => x.item != 0);
-    localStorage.setItem("data", JSON.stringify(basket));
+    updateItem();
 };
 
 let updateOrder = (id) => {
     let search = basket.find((x) => x.id === id);
     document.getElementById(id).innerHTML = search.item;
+
     calculation();
 };
 
@@ -137,4 +138,73 @@ let calculation = () => {
 };
 
 calculation();
+
+let addItem = () => {
+    let data = basket.length;
+    data = data - 1;
+    for (let i = 0; i <= data; i++) {
+        let jsonArray = basket;
+
+        let firstObject = jsonArray[i];
+
+        let id = firstObject.id;
+        let item = firstObject.item;
+
+        $.ajax({
+            type: "POST",
+            url: "AddToCart.php",
+            data: { id: id, item: item },
+            success: function (response) {
+                console.log(response);
+                console.log(basket);
+            }
+        });
+    }
+}
+
+let updateItem = () => {
+    let data = basket.length;
+    data = data - 1;
+    for (let i = 0; i <= data; i++) {
+        let jsonArray = basket;
+
+        let firstObject = jsonArray[i];
+
+        let id = firstObject.id;
+        let item = firstObject.item;
+
+        $.ajax({
+            type: "POST",
+            url: "UpdateCart.php",
+            data: { id: id, item: item },
+            success: function (response) {
+                console.log(response);
+                console.log(basket);
+            }
+        });
+    }
+}
+
+let delItem = () => {
+    let data = basket.length;
+    data = data - 1;
+    for (let i = 0; i <= data; i++) {
+        let jsonArray = basket;
+
+        let firstObject = jsonArray[i];
+
+
+        let id = firstObject.id;
+        let item = firstObject.item;
+
+        $.ajax({
+            type: "GET",
+            url: "DeleteCart.php",
+            data: { id: id, item: item },
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
+}
 
