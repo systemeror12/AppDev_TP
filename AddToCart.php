@@ -18,18 +18,18 @@ $tempId = $_SESSION["UserId"];
 $prodid = $_SESSION["id"];
 $prodquan = $_SESSION["item"];
 
-$check_query = "SELECT * FROM test 
+$check_query = "SELECT * FROM tb_cart 
 WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
 $result = $conn->query($check_query);
 
 if ($result->num_rows > 0) {
   echo "already exist";
 
-  $sql = "UPDATE test SET item='$prodquan' WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
+  $sql = "UPDATE tb_cart SET item='$prodquan' WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
   $result = mysqli_query($conn, $sql);
 } else {
   // Prepare the insert query
-  $sql = "INSERT INTO test ( User_id, Product_Id, Item) VALUES ('$tempId', '$prodid','$prodquan')";
+  $sql = "INSERT INTO tb_cart ( User_id, Product_Id, Item) VALUES ('$tempId', '$prodid','$prodquan')";
   mysqli_query($conn, $sql);
 }
 
