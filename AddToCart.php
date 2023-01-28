@@ -23,7 +23,10 @@ WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
 $result = $conn->query($check_query);
 
 if ($result->num_rows > 0) {
- echo"already exist";
+  echo "already exist";
+
+  $sql = "UPDATE test SET item='$prodquan' WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
+  $result = mysqli_query($conn, $sql);
 } else {
   // Prepare the insert query
   $sql = "INSERT INTO test ( User_id, Product_Id, Item) VALUES ('$tempId', '$prodid','$prodquan')";

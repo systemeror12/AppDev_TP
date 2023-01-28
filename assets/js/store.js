@@ -108,7 +108,7 @@ let increaseQuantity = (id) => {
         search.item += 1;
     }
     updateOrder(selectedItem.id);
-    addItem();
+    updateItem();
 };
 
 let decreaseQuantity = (id) => {
@@ -139,29 +139,6 @@ let calculation = () => {
 
 calculation();
 
-let addItem = () => {
-    let data = basket.length;
-    data = data - 1;
-    for (let i = 0; i <= data; i++) {
-        let jsonArray = basket;
-
-        let firstObject = jsonArray[i];
-
-        let id = firstObject.id;
-        let item = firstObject.item;
-
-        $.ajax({
-            type: "POST",
-            url: "AddToCart.php",
-            data: { id: id, item: item },
-            success: function (response) {
-                console.log(response);
-                console.log(basket);
-            }
-        });
-    }
-}
-
 let updateItem = () => {
     let data = basket.length;
     data = data - 1;
@@ -175,7 +152,7 @@ let updateItem = () => {
 
         $.ajax({
             type: "POST",
-            url: "UpdateCart.php",
+            url: "AddToCart.php",
             data: { id: id, item: item },
             success: function (response) {
                 console.log(response);
