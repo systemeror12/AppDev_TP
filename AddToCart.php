@@ -19,13 +19,11 @@ $prodid = $_SESSION["id"];
 $prodquan = $_SESSION["item"];
 
 $check_query = "SELECT * FROM test 
-WHERE Product_Id  = '$prodid' && User_Id  = '$tempId'";
+WHERE Product_Id  = '$prodid' && User_id  = '$tempId'";
 $result = $conn->query($check_query);
 
 if ($result->num_rows > 0) {
-  $sql = "UPDATE `test` SET `Product_Id`='$prodid', `Item`='$prodquan'
-  WHERE User_Id='$tempId'";
-  $result = mysqli_query($conn, $sql);
+ echo"already exist";
 } else {
   // Prepare the insert query
   $sql = "INSERT INTO test ( User_id, Product_Id, Item) VALUES ('$tempId', '$prodid','$prodquan')";
